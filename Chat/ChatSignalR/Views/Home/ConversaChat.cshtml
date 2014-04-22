@@ -1,0 +1,54 @@
+﻿ 
+@{
+    ViewBag.Title = "Index";
+}
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/json2.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery.signalR-2.0.0.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/signalr/hubs")"></script>
+
+<script type="text/javascript">
+    $(function () {
+        var chat = $.connection.chathub;
+
+        // método que o server(HUB) chamará
+        chat.client.adicionarMensagem = function (dataHora, remetente, mensagem) {
+
+            var resposta = "<em>" + dataHora + "h</em> <b>" + remetente + "</b> diz: " + mensagem;
+
+            $("#listaMensagens").append("<li>" + resposta + "</li>");
+        };
+
+        $("#btnEnviar").click(function () {
+            // chamará um método do server
+            enviarMensagem();
+        });
+
+        $(document).keypress(function (e) {
+            if (e.which == 13) {
+                enviarMensagem();
+            }
+        });
+
+        // inicia a conexão
+        $.connection.hub.start();
+
+        function enviarMensagem() {
+            chat.server.enviarMensagem($("#remetente").val(), $("#textMensagem").val());
+            $("#textMensagem").val('');
+        }
+    });
+</script>
+
+
+    <ul id="listaMensagens" style="margin-bottom: 20px;">
+
+    </ul>
+<p>
+    Enter == Enviar
+    <br />
+    <input type="text" id="textMensagem"/>
+    <input type="button" id="btnEnviar" value="Enviar" />
+    <input type="hidden" value="@ViewBag.Remetente" id="remetente" />
+    <br />
+</p>

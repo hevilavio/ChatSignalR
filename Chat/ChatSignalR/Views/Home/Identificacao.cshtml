@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Identifique-se";
+    Layout = @Url.Content("~/Views/Shared/_Layout.cshtml");        
+}
+
+@using (Html.BeginForm("ConversaChat", "Home", FormMethod.Post, null))
+{   
+    <div style="margin-left:auto; margin-right:auto; margin-top:200px; width: 290px;">
+        Seu nome: <input type="text" name="remetente" />
+    </div>
+    <br />
+    <div style="margin-left:auto; margin-right:auto; width: 200px;">
+        <input type="submit" value="Enviar" />
+    </div>
+}

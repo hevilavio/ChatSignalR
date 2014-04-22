@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<script type="text/javascript">
+
+    var count = 0;
+    $(document).ready(function () {
+
+        setTimeout("makeRequest()", 500);
+
+    });
+
+    function makeRequest() {
+        $.ajax({
+            type: "POST",
+            url: "@Url.Content("~/Ddos/Do")",
+            success: function (xhr) {
+                var obj = JSON.parse(xhr);
+            }
+        });
+
+        count++;
+        $("#CountRequest").html(count);
+        setTimeout("makeRequest()", 500);
+    }
+</script>
+Requests :<div id="CountRequest">0</div>
